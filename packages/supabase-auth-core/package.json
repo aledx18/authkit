@@ -1,6 +1,6 @@
 {
   "name": "@aledx18/supabase-auth-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Framework-agnostic auth layer for Supabase — login, logout, signup",
   "type": "module",
   "main": "./dist/index.js",
