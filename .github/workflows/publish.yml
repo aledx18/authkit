@@ -6,6 +6,14 @@ on:
       - main
   workflow_dispatch:
 
+# Si dos corridas se disparan sobre el mismo estado (ej: push + dispatch manual),
+# la segunda espera a que termine la primera. Al correr después, ya ve la versión
+# publicada y no intenta publicarla de nuevo (evita E409 "Cannot publish over
+# existing version").
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
