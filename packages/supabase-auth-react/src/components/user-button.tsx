@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../hooks";
-import { cx } from "./form-shared";
+import { cx } from "./form-shared.js";
 
 export type UserButtonProps = {
   className?: string;

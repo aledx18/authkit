@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { useAuth } from "../hooks";
 import type { AuthFormProps } from "../types";
-import { AuthCard, Field, SubmitButton } from "./form-shared";
+import { AuthCard, Field, SubmitButton } from "./form-shared.js";
 
 export function SignUp({ className, onSuccess, onError }: AuthFormProps) {
   const { signUp } = useAuth();

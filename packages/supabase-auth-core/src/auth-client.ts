@@ -1,5 +1,5 @@
-import { getAuthErrorMessage } from "./errors";
-import type { AuthClientOptions, AuthResult } from "./types";
+import { getAuthErrorMessage } from "./errors.js";
+import type { AuthClientOptions, AuthResult } from "./types.js";
 
 export type AuthClient = {
   login: (email: string, password: string) => Promise<AuthResult>;

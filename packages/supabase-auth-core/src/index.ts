@@ -1,4 +1,4 @@
-export type { AuthClient } from "./auth-client";
-export { createAuthClient } from "./auth-client";
-export { getAuthErrorMessage } from "./errors";
-export type { AuthClientOptions, AuthResult } from "./types";
+export type { AuthClient } from "./auth-client.js";
+export { createAuthClient } from "./auth-client.js";
+export { getAuthErrorMessage } from "./errors.js";
+export type { AuthClientOptions, AuthResult } from "./types.js";
