@@ -1,0 +1,21 @@
+{
+  "name": "@aledx18/astro-basic",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@aledx18/astro": "workspace:*",
+    "@supabase/supabase-js": "^2.57.4",
+    "@supabase/ssr": "^0.6.0",
+    "astro": "^7.2.0",
+    "@astrojs/node": "^10.0.0"
+  },
+  "devDependencies": {
+    "@aledx18/supabase-auth-core": "workspace:*"
+  }
+}
