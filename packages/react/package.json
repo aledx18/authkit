@@ -1,6 +1,6 @@
 {
   "name": "@aledx18/supabase-auth-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React auth kit for Supabase — provider, hooks, and ready-made UI",
   "type": "module",
   "main": "./dist/index.js",
