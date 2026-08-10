@@ -1,4 +1,7 @@
+import { cancel, confirm, isCancel, log, text } from "@clack/prompts";
 import { detectAstro } from "../detectors/astro.js";
+import { detectPackageManager } from "../detectors/package-manager.js";
+import { checkServerOutput } from "../steps/check-server-output.js";
 import { installDeps } from "../steps/install-deps.js";
 import { writeClient } from "../steps/write-client.js";
 import { writeEnv } from "../steps/write-env.js";
@@ -6,42 +9,89 @@ import { writeMiddleware } from "../steps/write-middleware.js";
 import { writePages } from "../steps/write-pages.js";
 import { writeTypes } from "../steps/write-types.js";
 
+type EnvCredentials = { url: string; key: string };
+
+function devCommand(packageManager: string): string {
+  if (packageManager === "npm") return "npm run dev";
+  if (packageManager === "yarn") return "yarn dev";
+  return `${packageManager} dev`;
+}
+
 /**
  * Scaffolds Supabase auth into an Astro project at `targetDir`.
  *
- * Detects Astro, installs the auth dependencies, and writes the pages,
- * endpoints, middleware, clients, env and types from templates. Existing
- * files are never overwritten.
+ * Flow: detect Astro → detect package manager → prompt for Supabase
+ * credentials → install deps → write env → write clients/middleware/pages
+ * → check SSR output → final report.
  */
 export async function init(targetDir = process.cwd()): Promise<void> {
   if (!detectAstro(targetDir)) {
-    console.error(`✗ No Astro project detected in ${targetDir}`);
-    console.error('  Run this inside a project with an astro config or an "astro" dependency.');
+    log.error(`No Astro project detected in ${targetDir}`);
+    log.error(
+      'Framework not supported yet — run this inside an Astro project (astro.config.mjs or an "astro" dependency).',
+    );
     process.exit(1);
   }
+  log.success("Detected Astro");
 
-  console.log("→ Detected Astro project");
+  const packageManager = detectPackageManager(targetDir);
+  log.info(`Package manager detected: ${packageManager}`);
 
-  console.log("→ Installing dependencies...");
-  await installDeps(targetDir);
+  const hasProject = await confirm({
+    message: "Do you already have a Supabase project?",
+    initialValue: false,
+  });
+  if (isCancel(hasProject)) {
+    cancel("Cancelled");
+    process.exit(0);
+  }
 
-  console.log("→ Writing environment template...");
-  writeEnv(targetDir);
+  let env: EnvCredentials = { url: "", key: "" };
+  if (hasProject) {
+    const url = await text({
+      message: "Supabase project URL",
+      placeholder: "https://your-project.supabase.co",
+      validate: (value) => (value?.startsWith("http") ? undefined : "Must be a valid URL"),
+    });
+    if (isCancel(url)) {
+      cancel("Cancelled");
+      process.exit(0);
+    }
 
-  console.log("→ Writing Supabase clients...");
+    const key = await text({
+      message: "Supabase publishable key (anon)",
+      placeholder: "your-anon-key",
+      validate: (value) => (value && value.length > 0 ? undefined : "Required"),
+    });
+    if (isCancel(key)) {
+      cancel("Cancelled");
+      process.exit(0);
+    }
+
+    env = { url, key };
+  }
+
+  log.step("Installing dependencies");
+  await installDeps(targetDir, packageManager);
+  log.success("Installed dependencies");
+
+  log.step("Writing environment");
+  writeEnv(targetDir, env);
+
+  log.step("Writing Supabase clients (browser + server)");
   writeClient(targetDir);
 
-  console.log("→ Writing middleware...");
+  log.step("Writing middleware");
   writeMiddleware(targetDir);
 
-  console.log("→ Writing pages and auth endpoints...");
+  log.step("Writing auth pages and endpoints");
   writePages(targetDir);
 
-  console.log("→ Writing types...");
+  log.step("Writing types");
   writeTypes(targetDir);
 
-  console.log("\n✓ Auth scaffolding complete.");
-  console.log("  Next steps:");
-  console.log("  1. Fill in SUPABASE_URL and PUBLIC_SUPABASE_PUBLISHABLE_KEY in .env");
-  console.log("  2. Run bun dev and visit /signin");
+  checkServerOutput(targetDir);
+
+  log.success("Auth scaffolding complete");
+  log.message(`Next step: ${devCommand(packageManager)} and visit /signin`);
 }

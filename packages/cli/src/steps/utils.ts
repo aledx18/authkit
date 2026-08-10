@@ -20,6 +20,16 @@ export function readTemplate(file: string): string {
 }
 
 /**
+ * Replaces `{{TOKEN}}` placeholders in a template. Unknown tokens are left
+ * untouched. Simple string replacement — no template engine needed.
+ */
+export function renderTemplate(content: string, vars: Record<string, string>): string {
+  return content.replace(/\{\{(\w+)\}\}/g, (match, name: string) => {
+    return vars[name] ?? match;
+  });
+}
+
+/**
  * Writes a file into the target project, skipping (and reporting) if it
  * already exists so user customizations are never overwritten.
  */
