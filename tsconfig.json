@@ -1,8 +1,9 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/supabase-auth-core" },
-    { "path": "packages/supabase-auth-react" },
-    { "path": "apps/lab" }
+    { "path": "packages/core" },
+    { "path": "packages/react" },
+    { "path": "packages/cli" },
+    { "path": "packages/astro" }
   ]
 }

@@ -1,8 +1,9 @@
-import type { AuthResult } from "@aledx18/supabase-auth-core";
 import type { Session, SupabaseClient, User } from "@supabase/supabase-js";
 import type { ReactNode } from "react";
 
-export type { AuthResult };
+export type AuthResult = {
+  error: string | null;
+};
 
 export type AuthContextValue = {
   supabase: SupabaseClient;

@@ -1,7 +1,7 @@
 {
   "name": "@aledx18/supabase-auth-core",
   "version": "0.2.1",
-  "description": "Framework-agnostic auth layer for Supabase — login, logout, signup",
+  "description": "Shared types and env validation for Supabase auth integrations",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,7 +17,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aledx18/authkit.git",
-    "directory": "packages/supabase-auth-core"
+    "directory": "packages/core"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -25,6 +25,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.24.0"
   },
   "peerDependencies": {
     "@supabase/supabase-js": ">=2.0.0"

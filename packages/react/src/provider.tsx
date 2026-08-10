@@ -1,8 +1,42 @@
-import { getAuthErrorMessage } from "@aledx18/supabase-auth-core";
 import type { Session } from "@supabase/supabase-js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./context.js";
 import type { AuthProviderProps, AuthResult } from "./types.js";
+
+const MESSAGES: Record<string, string> = {
+  invalid_credentials: "Email or password is incorrect.",
+  email_not_confirmed: "Confirm your email before signing in.",
+  user_already_exists: "An account with this email already exists.",
+  weak_password: "Password is too weak.",
+  over_request_rate_limit: "Too many attempts. Try again later.",
+  otp_expired: "This link has expired. Request a new one.",
+  same_password: "New password must be different from the current one.",
+};
+
+function getAuthErrorMessage(
+  error: { code?: string; message?: string } | null | undefined,
+): string {
+  if (!error) {
+    return "Something went wrong. Please try again.";
+  }
+
+  if (error.code) {
+    const mapped = MESSAGES[error.code];
+    if (mapped) return mapped;
+  }
+
+  if (error.message) {
+    const lower = error.message.toLowerCase();
+    if (lower.includes("invalid login credentials"))
+      return MESSAGES.invalid_credentials ?? error.message;
+    if (lower.includes("email not confirmed")) return MESSAGES.email_not_confirmed ?? error.message;
+    if (lower.includes("user already registered"))
+      return MESSAGES.user_already_exists ?? error.message;
+    return error.message;
+  }
+
+  return "Something went wrong. Please try again.";
+}
 
 function ok(): AuthResult {
   return { error: null };
@@ -62,7 +96,10 @@ export function AuthProvider({
 
   const signIn = useCallback(
     async (email: string, password: string): Promise<AuthResult> => {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
       return error ? fail(error) : ok();
     },
     [supabase],

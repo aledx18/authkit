@@ -1,0 +1,29 @@
+{
+  "name": "@aledx18/authkit",
+  "version": "0.1.0",
+  "description": "CLI for scaffolding auth with Supabase in Astro, Express, Hono, and more",
+  "type": "module",
+  "bin": {
+    "authkit": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aledx18/authkit.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

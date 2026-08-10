@@ -7,5 +7,5 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
-  "references": [{ "path": "../supabase-auth-core" }]
+  "references": [{ "path": "../core" }]
 }

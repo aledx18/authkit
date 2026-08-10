@@ -1,4 +1,3 @@
-export { getAuthErrorMessage } from "@aledx18/supabase-auth-core";
 export { ForgotPassword } from "./components/forgot-password.js";
 export { RequireAuth } from "./components/require-auth.js";
 export { SignIn } from "./components/sign-in.js";

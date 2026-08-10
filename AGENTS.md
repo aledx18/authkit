@@ -2,9 +2,13 @@
 
 ## Workspace
 
-- This Bun monorepo targets a React + Supabase auth kit.
-- Publishable code lives under `packages/` (e.g. `@aledx18/supabase-auth-core` and `@aledx18/supabase-auth-react`).
-- `apps/lab` is the private Vite playground.
+- This Bun monorepo targets a Supabase auth kit with multiple integrations.
+- Publishable code lives under `packages/`:
+  - `packages/core` → `@aledx18/supabase-auth-core` (tipos + utilidades mínimas NO cubiertas por supabase-js)
+  - `packages/cli` → `@aledx18/authkit` (CLI de scaffolding, sin lógica de auth)
+  - `packages/astro` → `@aledx18/astro` (integración Astro: middleware, locals, cookies, protected routes)
+  - `packages/react` → `@aledx18/supabase-auth-react` (PAUSADO, no tocar)
+- `examples/astro-basic` is a real Astro project with `output: 'server'` and adapter-node — this is the test field for discovering patterns that deserve to move up to core or astro.
 - Public package APIs are exported from each package's `src/index.ts`.
 - Internal dependencies use `"workspace:*"`.
 
@@ -17,12 +21,11 @@ bun install
 bun run lint
 bun run typecheck
 bun run build
-bun run dev
 ```
 
 - `bun run build` builds all workspaces under `packages/*`.
-- `bun run dev` builds packages and starts the Vite lab.
-- Focused commands: `bun run --filter='@aledx18/supabase-auth-core' build`, `bun run --filter='@aledx18/supabase-auth-react' build`, `bun run --filter='@aledx18/lab' start`.
+- Focused commands: `bun run --filter='@aledx18/supabase-auth-core' build`, `bun run --filter='@aledx18/authkit' build`, `bun run --filter='@aledx18/astro' build`.
+- To run the Astro example: `cd examples/astro-basic && bun install && bun run dev`.
 - There is no test runner or automated test suite yet.
 - Biome is authoritative for linting and formatting. Use `bun run lint:fix` or `bun run format` only when intentionally applying automated edits.
 

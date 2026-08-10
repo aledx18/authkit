@@ -1,11 +1,13 @@
 # authkit
 
-Kit de autenticación para Supabase con dos capas:
+Kit de autenticación para Supabase con múltiples integraciones:
 
-- **`@aledx18/supabase-auth-core`**: capa JS pura, framework-agnostic (login, logout, signup). Funciona en Astro, Express, Hono, Vite SSR, vanilla JS.
-- **`@aledx18/supabase-auth-react`**: capa React con provider, hooks y componentes UI. Depende del core.
+- **`@aledx18/supabase-auth-core`**: tipos y utilidades mínimas NO cubiertas por `@supabase/supabase-js`.
+- **`@aledx18/authkit`**: CLI para scaffolding de auth en Astro, Express, Hono, y más.
+- **`@aledx18/astro`**: integración Astro con middleware, locals, cookies y rutas protegidas.
+- **`@aledx18/supabase-auth-react`**: (PAUSADO) provider, hooks y componentes UI para React.
 
-El consumidor trae su propio cliente `@supabase/supabase-js` (peer dependency de ambos paquetes).
+El consumidor trae su propio cliente `@supabase/supabase-js` (peer dependency de todos los paquetes).
 
 ## Setup local
 
@@ -17,62 +19,22 @@ bun install
 
 ```bash
 bun run build          # buildea packages/*
-bun run dev            # buildea y ejecuta lab
 bun run typecheck      # verifica tipos con tsc --build
 bun run lint           # revisa el código con Biome
 bun run lint:fix       # corrige lo que se pueda automáticamente
 bun run format         # formatea todo el repo
 ```
 
-## Uso rápido (React)
-
-```tsx
-import { createClient } from "@supabase/supabase-js";
-import {
-  AuthProvider,
-  RequireAuth,
-  SignIn,
-  UserButton,
-} from "@aledx18/supabase-auth-react";
-import "@aledx18/supabase-auth-react/styles.css";
-
-const supabase = createClient(url, anonKey);
-
-export function App() {
-  return (
-    <AuthProvider supabase={supabase}>
-      <RequireAuth fallback={<SignIn />}>
-        <UserButton />
-        {/* app protegida */}
-      </RequireAuth>
-    </AuthProvider>
-  );
-}
-```
-
-## Uso rápido (JS puro / framework-agnostic)
-
-```ts
-import { createClient } from "@supabase/supabase-js";
-import { createAuthClient } from "@aledx18/supabase-auth-core";
-
-const supabase = createClient(url, anonKey);
-const auth = createAuthClient({ supabase });
-
-const { error } = await auth.login("user@example.com", "password");
-if (error) {
-  console.error(error);
-}
-```
-
 ## Estructura
 
 ```
 packages/
-  supabase-auth-core/    # @aledx18/supabase-auth-core (JS puro)
-  supabase-auth-react/   # @aledx18/supabase-auth-react (React)
-apps/
-  lab/                   # playground Vite (VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY)
+  core/         # @aledx18/supabase-auth-core (tipos + utilidades mínimas)
+  cli/          # @aledx18/authkit (CLI de scaffolding)
+  astro/        # @aledx18/astro (integración Astro)
+  react/        # @aledx18/supabase-auth-react (PAUSADO)
+examples/
+  astro-basic/  # Campo de pruebas Astro con output: 'server'
 ```
 
 Cada paquete nuevo dentro de `packages/` debe:
@@ -87,7 +49,7 @@ Cada paquete nuevo dentro de `packages/` debe:
 ```json
 {
   "dependencies": {
-    "@aledx18/supabase-auth-react": "workspace:*"
+    "@aledx18/supabase-auth-core": "workspace:*"
   }
 }
 ```
@@ -108,6 +70,15 @@ En el repo externo, agregá un `.npmrc`:
 Y luego:
 
 ```bash
-bun add @supabase/supabase-js @aledx18/supabase-auth-react
+bun add @supabase/supabase-js @aledx18/supabase-auth-core
 ```
+
+## Regla de oro para el core
+
+Antes de agregar cualquier función a `@aledx18/supabase-auth-core`:
+
+1. **¿`@supabase/supabase-js` ya resuelve esto?** → si sí, no lo metas.
+2. **¿Lo necesito idéntico en 2+ aplicaciones?** → si no, no lo metas todavía.
+
+Ver [CONTRIBUTING.md](./CONTRIBUTING.md) para más detalles.
 
