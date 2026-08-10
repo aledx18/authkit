@@ -29,6 +29,10 @@
     "./protect": {
       "types": "./dist/protect.d.ts",
       "import": "./dist/protect.js"
+    },
+    "./handlers": {
+      "types": "./dist/handlers.d.ts",
+      "import": "./dist/handlers.js"
     }
   },
   "files": [

@@ -1,9 +1,3 @@
-import { createSupabaseServerClient } from "@aledx18/astro/server";
-import type { APIRoute } from "astro";
+import { createAuthHandlers } from "@aledx18/astro/handlers";
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerClient({ request, cookies });
-  await supabase.auth.signOut();
-
-  return new Response(null, { status: 302, headers: { Location: "/" } });
-};
+export const POST = createAuthHandlers().logout;
