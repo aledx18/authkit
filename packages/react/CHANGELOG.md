@@ -1,5 +1,11 @@
 # @aledx18/supabase-auth-react
 
+## 1.0.2
+
+### Patch Changes
+
+- 30c289b: Make package self-contained: moved `getAuthErrorMessage` and `AuthResult` locally, removed the dependency on `@aledx18/supabase-auth-core`. Package remains paused.
+
 ## 1.0.1
 
 ### Patch Changes
