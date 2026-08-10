@@ -1,0 +1,62 @@
+{
+  "name": "@aledx18/astro",
+  "version": "0.1.0",
+  "description": "Astro integration for Supabase auth — middleware, locals, cookies, protected routes",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
+    "./protect": {
+      "types": "./dist/protect.d.ts",
+      "import": "./dist/protect.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aledx18/authkit.git",
+    "directory": "packages/astro"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@aledx18/supabase-auth-core": "workspace:*",
+    "@supabase/ssr": "^0.6.0",
+    "@supabase/supabase-js": "^2.57.4",
+    "zod": "^3.24.0"
+  },
+  "peerDependencies": {
+    "astro": ">=4.0.0"
+  },
+  "devDependencies": {
+    "astro": "^7.2.0",
+    "typescript": "^5.6.3"
+  }
+}
