@@ -1,0 +1,23 @@
+---
+const error = Astro.url.searchParams.get("error");
+---
+
+<html>
+  <head><title>Register</title></head>
+  <body>
+    <h1>Register</h1>
+    {error && <p>{error}</p>}
+    <form method="post" action="/api/auth/register">
+      <label>
+        Email
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" required />
+      </label>
+      <button type="submit">Create account</button>
+    </form>
+    <p><a href="/signin">Already have an account? Sign in</a></p>
+  </body>
+</html>

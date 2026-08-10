@@ -1,0 +1,25 @@
+---
+const registered = Astro.url.searchParams.get("registered");
+const error = Astro.url.searchParams.get("error");
+---
+
+<html>
+  <head><title>Sign in</title></head>
+  <body>
+    <h1>Sign in</h1>
+    {registered && <p>Account created — check your email to confirm.</p>}
+    {error && <p>{error}</p>}
+    <form method="post" action="/api/auth/signin">
+      <label>
+        Email
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" required />
+      </label>
+      <button type="submit">Sign in</button>
+    </form>
+    <p><a href="/register">Create an account</a></p>
+  </body>
+</html>

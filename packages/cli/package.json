@@ -20,7 +20,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && rm -rf dist/templates && cp -r src/templates dist/templates",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {

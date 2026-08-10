@@ -1,0 +1,20 @@
+---
+import { requireAuth } from "@aledx18/astro/protect";
+
+const redirectResponse = requireAuth(Astro);
+if (redirectResponse) return redirectResponse;
+
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const user = Astro.locals.user;
+---
+
+<html>
+  <head><title>Dashboard</title></head>
+  <body>
+    <h1>Dashboard</h1>
+    <p>Welcome, {user?.email ?? "unknown"}</p>
+    <form method="post" action="/api/auth/signout">
+      <button type="submit">Sign out</button>
+    </form>
+  </body>
+</html>
