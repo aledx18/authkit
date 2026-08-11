@@ -1,6 +1,6 @@
 {
   "name": "@aledx18/astro",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Astro integration for Supabase auth — middleware, locals, cookies, protected routes",
   "type": "module",
   "main": "./dist/index.js",
