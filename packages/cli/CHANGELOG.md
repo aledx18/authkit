@@ -1,5 +1,15 @@
 # @aledx18/authkit
 
+## 0.3.0
+
+### Minor Changes
+
+- 4c594fc: Interactive SSR setup during `init`: when the Astro config does not set `output: "server"`, the CLI now prompts to configure it (adapter choice: node/vercel/cloudflare/netlify), installs the adapter as a devDependency, and patches the config with `output: "server"` + adapter (keeping a `.bak` backup). Skipping is still possible; if `output: "server"` is already set, the step is silent.
+
+### Patch Changes
+
+- b4144ed: Fix env template: generate `PUBLIC_SUPABASE_URL` (matching `@aledx18/astro` env schema) instead of `SUPABASE_URL`.
+
 ## 0.2.0
 
 ### Minor Changes
