@@ -1,4 +1,9 @@
 ---
+import { requireGuest } from "@aledx18/astro/protect";
+
+const redirectResponse = requireGuest(Astro);
+if (redirectResponse) return redirectResponse;
+
 const registered = Astro.url.searchParams.get("registered");
 const error = Astro.url.searchParams.get("error");
 ---

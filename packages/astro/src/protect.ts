@@ -22,3 +22,25 @@ export function requireAuth(context: ProtectableContext, redirectTo = "/signin")
   }
   return null;
 }
+
+/**
+ * Protects guest-only pages (signin, register) — redirects to `redirectTo`
+ * if a user IS in locals.
+ *
+ * Returns `null` if not authenticated (continue rendering), or a `Response`
+ * to return early.
+ *
+ * @example
+ * ---
+ * import { requireGuest } from "@aledx18/astro/protect";
+ * const redirectResponse = requireGuest(Astro);
+ * if (redirectResponse) return redirectResponse;
+ * ---
+ * <form method="post" action="/api/auth/signin">...</form>
+ */
+export function requireGuest(context: ProtectableContext, redirectTo = "/dashboard") {
+  if (context.locals.user) {
+    return context.redirect(redirectTo);
+  }
+  return null;
+}
