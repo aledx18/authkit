@@ -1,7 +1,7 @@
 import { cancel, confirm, isCancel, log, text } from "@clack/prompts";
 import { detectAstro } from "../detectors/astro.js";
 import { detectPackageManager } from "../detectors/package-manager.js";
-import { checkServerOutput } from "../steps/check-server-output.js";
+import { configureSsr } from "../steps/configure-ssr.js";
 import { installDeps } from "../steps/install-deps.js";
 import { writeClient } from "../steps/write-client.js";
 import { writeEnv } from "../steps/write-env.js";
@@ -75,6 +75,9 @@ export async function init(targetDir = process.cwd()): Promise<void> {
   await installDeps(targetDir, packageManager);
   log.success("Installed dependencies");
 
+  log.step("Checking SSR output");
+  await configureSsr(targetDir, packageManager);
+
   log.step("Writing environment");
   writeEnv(targetDir, env);
 
@@ -89,8 +92,6 @@ export async function init(targetDir = process.cwd()): Promise<void> {
 
   log.step("Writing types");
   writeTypes(targetDir);
-
-  checkServerOutput(targetDir);
 
   log.success("Auth scaffolding complete");
   log.message(`Next step: ${devCommand(packageManager)} and visit /signin`);
