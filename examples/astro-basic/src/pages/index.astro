@@ -1,11 +1,25 @@
 ---
+import { actions, isInputError } from "astro:actions";
+
+const result = Astro.getActionResult(actions.signin);
+if (result && !result.error && result.data?.ok) {
+  return Astro.redirect("/dashboard");
+}
+
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const authError = result?.data && !result.data.ok ? result.data.error : undefined;
 ---
 
 <html>
   <head><title>Sign In</title></head>
   <body>
     <h1>Sign In</h1>
-    <form method="post" action="/api/login">
+    {authError && <p>{authError}</p>}
+    {inputErrors.email && <p>{inputErrors.email.join(", ")}</p>}
+    {inputErrors.password && <p>{inputErrors.password.join(", ")}</p>}
+    <form method="POST" action={actions.signin}>
       <label>
         Email
         <input type="email" name="email" required />

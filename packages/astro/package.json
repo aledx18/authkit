@@ -30,9 +30,9 @@
       "types": "./dist/protect.d.ts",
       "import": "./dist/protect.js"
     },
-    "./handlers": {
-      "types": "./dist/handlers.d.ts",
-      "import": "./dist/handlers.js"
+    "./actions": {
+      "types": "./dist/actions.d.ts",
+      "import": "./dist/actions.js"
     }
   },
   "files": [
@@ -57,7 +57,7 @@
     "zod": "^3.24.0"
   },
   "peerDependencies": {
-    "astro": ">=4.0.0"
+    "astro": ">=5.0.0"
   },
   "devDependencies": {
     "astro": "^7.2.0",

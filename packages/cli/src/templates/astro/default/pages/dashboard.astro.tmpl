@@ -1,4 +1,6 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: used in template
+import { actions } from "astro:actions";
 import { requireAuth } from "@aledx18/astro/protect";
 
 const redirectResponse = requireAuth(Astro);
@@ -13,7 +15,7 @@ const user = Astro.locals.user;
   <body>
     <h1>Dashboard</h1>
     <p>Welcome, {user?.email ?? "unknown"}</p>
-    <form method="post" action="/api/auth/signout">
+    <form method="POST" action={actions.signout}>
       <button type="submit">Sign out</button>
     </form>
   </body>

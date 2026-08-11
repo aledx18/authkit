@@ -1,18 +1,29 @@
 ---
+import { actions, isInputError } from "astro:actions";
 import { requireGuest } from "@aledx18/astro/protect";
 
 const redirectResponse = requireGuest(Astro);
 if (redirectResponse) return redirectResponse;
 
-const error = Astro.url.searchParams.get("error");
+const result = Astro.getActionResult(actions.register);
+if (result && !result.error && result.data?.ok) {
+  return Astro.redirect("/signin?registered=1");
+}
+
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const authError = result?.data && !result.data.ok ? result.data.error : undefined;
 ---
 
 <html>
   <head><title>Register</title></head>
   <body>
     <h1>Register</h1>
-    {error && <p>{error}</p>}
-    <form method="post" action="/api/auth/register">
+    {authError && <p>{authError}</p>}
+    {inputErrors.email && <p>{inputErrors.email.join(", ")}</p>}
+    {inputErrors.password && <p>{inputErrors.password.join(", ")}</p>}
+    <form method="POST" action={actions.register}>
       <label>
         Email
         <input type="email" name="email" required />

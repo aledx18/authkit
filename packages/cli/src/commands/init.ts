@@ -3,6 +3,7 @@ import { detectAstro } from "../detectors/astro.js";
 import { detectPackageManager } from "../detectors/package-manager.js";
 import { configureSsr } from "../steps/configure-ssr.js";
 import { installDeps } from "../steps/install-deps.js";
+import { writeActions } from "../steps/write-actions.js";
 import { writeClient } from "../steps/write-client.js";
 import { writeEnv } from "../steps/write-env.js";
 import { writeMiddleware } from "../steps/write-middleware.js";
@@ -86,6 +87,9 @@ export async function init(targetDir = process.cwd()): Promise<void> {
 
   log.step("Writing middleware");
   writeMiddleware(targetDir);
+
+  log.step("Writing auth actions");
+  writeActions(targetDir);
 
   log.step("Writing auth pages and endpoints");
   writePages(targetDir);
