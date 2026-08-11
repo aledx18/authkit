@@ -1,10 +1,14 @@
 ---
-// biome-ignore lint/correctness/noUnusedImports: used in template
 import { actions } from "astro:actions";
 import { requireAuth } from "@aledx18/astro/protect";
 
 const redirectResponse = requireAuth(Astro);
 if (redirectResponse) return redirectResponse;
+
+const signOutResult = Astro.getActionResult(actions.signout);
+if (signOutResult && !signOutResult.error) {
+  return Astro.redirect("/signin");
+}
 
 // biome-ignore lint/correctness/noUnusedVariables: used in template
 const user = Astro.locals.user;
