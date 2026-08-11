@@ -1,5 +1,15 @@
 # @aledx18/authkit
 
+## 0.4.0
+
+### Minor Changes
+
+- 8aad57d: `init` now scaffolds Astro Actions instead of form POST endpoints: generates `src/actions/index.ts` (wiring `authActions` with `defineAction`), and signin/register/dashboard pages use `<form method="POST" action={actions.x}>` with PRG redirects via `Astro.getActionResult()`. The email-confirmation `callback` remains a GET endpoint.
+
+### Patch Changes
+
+- 5722b2f: Generated signin/register pages now use `requireGuest`: authenticated users visiting them are redirected to `/dashboard` instead of seeing the form again.
+
 ## 0.3.0
 
 ### Minor Changes
