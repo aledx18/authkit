@@ -1,11 +1,11 @@
 import { renderTemplate, writeFileIfMissing } from "./utils.js";
 
-const ENV_TEMPLATE = `SUPABASE_URL={{SUPABASE_URL}}
+const ENV_TEMPLATE = `PUBLIC_SUPABASE_URL={{PUBLIC_SUPABASE_URL}}
 PUBLIC_SUPABASE_PUBLISHABLE_KEY={{PUBLIC_SUPABASE_PUBLISHABLE_KEY}}
 `;
 
 const PLACEHOLDERS: Record<string, string> = {
-  SUPABASE_URL: "https://your-project.supabase.co",
+  PUBLIC_SUPABASE_URL: "https://your-project.supabase.co",
   PUBLIC_SUPABASE_PUBLISHABLE_KEY: "your-anon-key",
 };
 
@@ -21,7 +21,7 @@ export function writeEnv(targetDir: string, env: { url: string; key: string }): 
       targetDir,
       ".env",
       renderTemplate(ENV_TEMPLATE, {
-        SUPABASE_URL: env.url,
+        PUBLIC_SUPABASE_URL: env.url,
         PUBLIC_SUPABASE_PUBLISHABLE_KEY: env.key,
       }),
     );
