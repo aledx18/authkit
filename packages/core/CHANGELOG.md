@@ -1,5 +1,11 @@
 # @aledx18/supabase-auth-core
 
+## 0.4.0
+
+### Minor Changes
+
+- f510a16: Add `getAuthErrorMessage` — maps Supabase auth error codes to friendly, UI-ready messages (falls back to the raw message for unknown codes). Framework-agnostic, shared by the Astro actions.
+
 ## 0.3.0
 
 ### Minor Changes

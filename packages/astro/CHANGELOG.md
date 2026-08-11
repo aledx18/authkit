@@ -1,5 +1,13 @@
 # @aledx18/astro
 
+## 0.3.2
+
+### Patch Changes
+
+- f510a16: Auth actions now return friendly error messages via core's `getAuthErrorMessage`, plus the stable error `code` in the result (`{ ok: false, code, error }`) so pages can branch on it for custom UX.
+- Updated dependencies [f510a16]
+  - @aledx18/supabase-auth-core@0.4.0
+
 ## 0.3.1
 
 ### Patch Changes

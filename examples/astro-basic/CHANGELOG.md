@@ -1,5 +1,12 @@
 # @aledx18/astro-basic
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [f510a16]
+  - @aledx18/astro@0.3.2
+
 ## 0.0.6
 
 ### Patch Changes
