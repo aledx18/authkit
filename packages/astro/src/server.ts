@@ -31,9 +31,12 @@ interface ServerClientContext {
  */
 export function createSupabaseServerClient(context: ServerClientContext) {
   const { url, key } = getSupabaseEnv();
+  // Secure cookies only over https — otherwise localhost/LAN dev sessions
+  // would be silently dropped by the browser.
+  const secure = new URL(context.request.url).protocol === "https:";
 
   return createServerClient(url, key, {
-    cookieOptions: authCookieOptions,
+    cookieOptions: { ...authCookieOptions, secure },
     cookies: {
       getAll() {
         return parseCookieHeader(context.request.headers.get("Cookie") ?? "").map((c) => ({

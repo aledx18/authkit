@@ -5,28 +5,25 @@ import { requireGuest } from "@aledx18/astro/protect";
 const redirectResponse = requireGuest(Astro);
 if (redirectResponse) return redirectResponse;
 
-const result = Astro.getActionResult(actions.signin);
+const result = Astro.getActionResult(actions.register);
 if (result && !result.error && result.data?.ok) {
-  return Astro.redirect("/dashboard");
+  return Astro.redirect("/signin?registered=1");
 }
 
 // biome-ignore lint/correctness/noUnusedVariables: used in template
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 // biome-ignore lint/correctness/noUnusedVariables: used in template
 const authError = result?.data && !result.data.ok ? result.data.error : undefined;
-// biome-ignore lint/correctness/noUnusedVariables: used in template
-const registered = Astro.url.searchParams.get("registered");
 ---
 
 <html>
-  <head><title>Sign in</title></head>
+  <head><title>Register</title></head>
   <body>
-    <h1>Sign in</h1>
-    {registered && <p>Account created — check your email to confirm.</p>}
+    <h1>Register</h1>
     {authError && <p>{authError}</p>}
     {inputErrors.email && <p>{inputErrors.email.join(", ")}</p>}
     {inputErrors.password && <p>{inputErrors.password.join(", ")}</p>}
-    <form method="POST" action={actions.signin}>
+    <form method="POST" action={actions.register}>
       <label>
         Email
         <input type="email" name="email" required />
@@ -35,8 +32,8 @@ const registered = Astro.url.searchParams.get("registered");
         Password
         <input type="password" name="password" required />
       </label>
-      <button type="submit">Sign in</button>
+      <button type="submit">Create account</button>
     </form>
-    <p><a href="/register">Create an account</a></p>
+    <p><a href="/signin">Already have an account? Sign in</a></p>
   </body>
 </html>

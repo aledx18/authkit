@@ -1,34 +1,18 @@
 ---
-import { actions, isInputError } from "astro:actions";
-
-const result = Astro.getActionResult(actions.signin);
-if (result && !result.error && result.data?.ok) {
-  return Astro.redirect("/dashboard");
-}
-
 // biome-ignore lint/correctness/noUnusedVariables: used in template
-const inputErrors = isInputError(result?.error) ? result.error.fields : {};
-// biome-ignore lint/correctness/noUnusedVariables: used in template
-const authError = result?.data && !result.data.ok ? result.data.error : undefined;
+const user = Astro.locals.user;
 ---
 
 <html>
-  <head><title>Sign In</title></head>
+  <head><title>AuthKit example</title></head>
   <body>
-    <h1>Sign In</h1>
-    {authError && <p>{authError}</p>}
-    {inputErrors.email && <p>{inputErrors.email.join(", ")}</p>}
-    {inputErrors.password && <p>{inputErrors.password.join(", ")}</p>}
-    <form method="POST" action={actions.signin}>
-      <label>
-        Email
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        Password
-        <input type="password" name="password" required />
-      </label>
-      <button type="submit">Sign in</button>
-    </form>
+    <h1>AuthKit + Astro</h1>
+    {user ? (
+      <p>Welcome back, {user.email} — <a href="/dashboard">go to dashboard</a></p>
+    ) : (
+      <p>
+        <a href="/signin">Sign in</a> · <a href="/register">Create an account</a>
+      </p>
+    )}
   </body>
 </html>
