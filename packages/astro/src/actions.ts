@@ -1,3 +1,4 @@
+import { getAuthErrorMessage } from "@aledx18/supabase-auth-core";
 import type { AstroCookies } from "astro";
 import { z } from "astro/zod";
 import { createSupabaseServerClient } from "./server.js";
@@ -12,7 +13,7 @@ interface AuthActionContext {
   cookies: AstroCookies;
 }
 
-type AuthResult = { ok: true } | { ok: false; error: string };
+type AuthResult = { ok: true } | { ok: false; code: string; error: string };
 
 /**
  * Auth action definitions for Astro Actions.
@@ -23,6 +24,18 @@ type AuthResult = { ok: true } | { ok: false; error: string };
  *
  * Handlers return a discriminated result instead of throwing `ActionError`,
  * so the package never imports from `astro:actions` at runtime.
+ *
+ * The definitions are plain objects, so the input schema can be customized
+ * by spreading and overriding:
+ *
+ * @example
+ * // Custom input validation while keeping the default handler
+ * import { z } from "astro/zod";
+ * import { authActions } from "@aledx18/astro/actions";
+ * defineAction({
+ *   ...authActions.register,
+ *   input: z.object({ email: z.email(), password: z.string().min(8) }),
+ * });
  *
  * @example
  * // src/actions/index.ts
@@ -56,7 +69,7 @@ export const authActions = {
       });
 
       if (error) {
-        return { ok: false, error: error.message };
+        return { ok: false, code: error.code ?? "unknown", error: getAuthErrorMessage(error) };
       }
       return { ok: true };
     },
@@ -103,7 +116,7 @@ export const authActions = {
       });
 
       if (error) {
-        return { ok: false, error: error.message };
+        return { ok: false, code: error.code ?? "unknown", error: getAuthErrorMessage(error) };
       }
       return { ok: true };
     },
