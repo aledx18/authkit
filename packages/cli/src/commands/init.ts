@@ -2,6 +2,7 @@ import { cancel, confirm, isCancel, log, text } from "@clack/prompts";
 import { detectAstro } from "../detectors/astro.js";
 import { detectPackageManager } from "../detectors/package-manager.js";
 import { configureSsr } from "../steps/configure-ssr.js";
+import { configureTailwind } from "../steps/configure-tailwind.js";
 import { installDeps } from "../steps/install-deps.js";
 import { writeActions } from "../steps/write-actions.js";
 import { writeClient } from "../steps/write-client.js";
@@ -78,6 +79,9 @@ export async function init(targetDir = process.cwd()): Promise<void> {
 
   log.step("Checking SSR output");
   await configureSsr(targetDir, packageManager);
+
+  log.step("Checking Tailwind");
+  configureTailwind(targetDir, packageManager);
 
   log.step("Writing environment");
   writeEnv(targetDir, env);
