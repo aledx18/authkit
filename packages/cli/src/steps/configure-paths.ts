@@ -50,7 +50,8 @@ export function configurePaths(targetDir: string): void {
   copyFileSync(tsconfigPath, `${tsconfigPath}.bak`);
 
   tsconfig.compilerOptions ??= {};
-  tsconfig.compilerOptions.baseUrl ??= ".";
+  // No baseUrl: paths resolve relative to the tsconfig location since TS 4.1,
+  // and baseUrl is deprecated in TypeScript 7.
   tsconfig.compilerOptions.paths ??= {};
   tsconfig.compilerOptions.paths["@/*"] = ["./src/*"];
 
