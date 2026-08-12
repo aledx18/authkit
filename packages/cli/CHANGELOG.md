@@ -1,5 +1,12 @@
 # @aledx18/authkit
 
+## 0.7.0
+
+### Minor Changes
+
+- 3188ceb: Style the generated auth pages with Tailwind: signin, register, forgot-password, reset-password and dashboard now ship with a consistent card layout (slate background, blue primary, green/red message banners) and import the Tailwind stylesheet. The example mirrors the styled scaffold.
+- aa36649: `init` now installs and configures Tailwind by default (like SSR): detects whether Tailwind is already present (deps or config), and if not, runs `astro add tailwind --yes` with the detected package manager (installs Tailwind v4 via `@tailwindcss/vite`, adds the vite plugin, scaffolds `src/styles/global.css`).
+
 ## 0.6.0
 
 ### Minor Changes
