@@ -1,4 +1,5 @@
 ---
+import "../styles/global.css";
 import { actions } from "astro:actions";
 import { requireAuth } from "@aledx18/astro/protect";
 
@@ -16,11 +17,19 @@ const user = Astro.locals.user;
 
 <html>
   <head><title>Dashboard</title></head>
-  <body>
-    <h1>Dashboard</h1>
-    <p>Welcome, {user?.email ?? "unknown"}</p>
-    <form method="POST" action={actions.signout}>
-      <button type="submit">Sign out</button>
-    </form>
+  <body class="min-h-screen bg-slate-100">
+    <header class="bg-white shadow-sm">
+      <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-slate-900">Dashboard</h1>
+        <form method="POST" action={actions.signout}>
+          <button type="submit" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-medium py-2 px-4 rounded-lg transition">Sign out</button>
+        </form>
+      </div>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 py-8">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <p class="text-slate-700">Welcome, <span class="font-semibold text-slate-900">{user?.email ?? "unknown"}</span></p>
+      </div>
+    </main>
   </body>
 </html>
