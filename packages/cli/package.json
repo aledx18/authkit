@@ -1,6 +1,6 @@
 {
   "name": "@aledx18/authkit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "CLI for scaffolding auth with Supabase in Astro, Express, Hono, and more",
   "type": "module",
   "bin": {
