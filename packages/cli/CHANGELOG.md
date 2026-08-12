@@ -1,5 +1,11 @@
 # @aledx18/authkit
 
+## 0.6.0
+
+### Minor Changes
+
+- 9e6bf57: `init` now scaffolds the password reset flow: `forgot-password` and `reset-password` pages (the latter exchanges the recovery code for a session with a PRG redirect, then updates the password), wires the new actions, and adds "Forgot your password?" + "password updated" messages to signin.
+
 ## 0.5.0
 
 ### Minor Changes

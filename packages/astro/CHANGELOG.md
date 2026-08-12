@@ -1,5 +1,11 @@
 # @aledx18/astro
 
+## 0.5.0
+
+### Minor Changes
+
+- 9e6bf57: Add password reset actions to `authActions`: `forgotPassword` (`resetPasswordForEmail` with redirect to `/reset-password`) and `updatePassword` (`updateUser({ password })`, requires the recovery session).
+
 ## 0.4.0
 
 ### Minor Changes
