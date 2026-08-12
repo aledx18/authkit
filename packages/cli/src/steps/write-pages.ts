@@ -3,6 +3,7 @@ import { readTemplate, writeFileIfMissing } from "./utils.js";
 /** Template file → target path inside the generated project. */
 const PAGE_TEMPLATES: Record<string, string> = {
   "pages/api/auth/callback.ts.tmpl": "src/pages/api/auth/callback.ts",
+  "pages/api/auth/oauth/[provider].ts.tmpl": "src/pages/api/auth/oauth/[provider].ts",
   "pages/signin.astro.tmpl": "src/pages/signin.astro",
   "pages/register.astro.tmpl": "src/pages/register.astro",
   "pages/dashboard.astro.tmpl": "src/pages/dashboard.astro",
