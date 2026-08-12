@@ -1,6 +1,6 @@
 {
   "name": "@aledx18/supabase-auth-core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Shared types and env validation for Supabase auth integrations",
   "type": "module",
   "main": "./dist/index.js",
