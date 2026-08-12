@@ -1,6 +1,7 @@
 import { cancel, confirm, isCancel, log, text } from "@clack/prompts";
 import { detectAstro } from "../detectors/astro.js";
 import { detectPackageManager } from "../detectors/package-manager.js";
+import { configurePaths } from "../steps/configure-paths.js";
 import { configureSsr } from "../steps/configure-ssr.js";
 import { configureTailwind } from "../steps/configure-tailwind.js";
 import { installDeps } from "../steps/install-deps.js";
@@ -82,6 +83,9 @@ export async function init(targetDir = process.cwd()): Promise<void> {
 
   log.step("Checking Tailwind");
   configureTailwind(targetDir, packageManager);
+
+  log.step("Checking path alias");
+  configurePaths(targetDir);
 
   log.step("Writing environment");
   writeEnv(targetDir, env);
