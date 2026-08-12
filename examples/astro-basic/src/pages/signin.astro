@@ -18,6 +18,8 @@ const authError = result?.data && !result.data.ok ? result.data.error : undefine
 const registered = Astro.url.searchParams.get("registered");
 // biome-ignore lint/correctness/noUnusedVariables: used in template
 const errorParam = Astro.url.searchParams.get("error");
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+const passwordChanged = Astro.url.searchParams.get("passwordChanged");
 ---
 
 <html>
@@ -25,6 +27,7 @@ const errorParam = Astro.url.searchParams.get("error");
   <body>
     <h1>Sign in</h1>
     {registered && <p>Account created — check your email to confirm.</p>}
+    {passwordChanged && <p>Password updated — sign in with your new password.</p>}
     {errorParam && <p>{errorParam}</p>}
     {authError && <p>{authError}</p>}
     {inputErrors.email && <p>{inputErrors.email.join(", ")}</p>}
@@ -41,6 +44,6 @@ const errorParam = Astro.url.searchParams.get("error");
       <button type="submit">Sign in</button>
     </form>
     <p><a href="/api/auth/oauth/google">Continue with Google</a> · <a href="/api/auth/oauth/github">Continue with GitHub</a></p>
-    <p><a href="/register">Create an account</a></p>
+    <p><a href="/forgot-password">Forgot your password?</a> · <a href="/register">Create an account</a></p>
   </body>
 </html>

@@ -121,4 +121,52 @@ export const authActions = {
       return { ok: true };
     },
   },
+
+  forgotPassword: {
+    accept: "form" as const,
+    input: z.object({
+      email: z.email(),
+    }),
+    handler: async (
+      { email }: { email: string },
+      context: AuthActionContext,
+    ): Promise<AuthResult> => {
+      const supabase = createSupabaseServerClient({
+        request: context.request,
+        cookies: context.cookies,
+      });
+
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: new URL("/reset-password", context.url).toString(),
+      });
+
+      if (error) {
+        return { ok: false, code: error.code ?? "unknown", error: getAuthErrorMessage(error) };
+      }
+      return { ok: true };
+    },
+  },
+
+  updatePassword: {
+    accept: "form" as const,
+    input: z.object({
+      password: z.string().min(1),
+    }),
+    handler: async (
+      { password }: { password: string },
+      context: AuthActionContext,
+    ): Promise<AuthResult> => {
+      const supabase = createSupabaseServerClient({
+        request: context.request,
+        cookies: context.cookies,
+      });
+
+      const { error } = await supabase.auth.updateUser({ password });
+
+      if (error) {
+        return { ok: false, code: error.code ?? "unknown", error: getAuthErrorMessage(error) };
+      }
+      return { ok: true };
+    },
+  },
 };
