@@ -1,5 +1,11 @@
 # @aledx18/authkit
 
+## 0.8.0
+
+### Minor Changes
+
+- de47bc4: `init` now configures the `@/*` → `./src/*` path alias in tsconfig.json (skipped when already present, `.bak` backup kept). Astro resolves the alias at runtime natively, no Vite config needed. Generated pages import the stylesheet via `@/styles/global.css`.
+
 ## 0.7.0
 
 ### Minor Changes
