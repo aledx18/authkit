@@ -11,6 +11,7 @@ import { writeEnv } from "../steps/write-env.js";
 import { writeMiddleware } from "../steps/write-middleware.js";
 import { writePages } from "../steps/write-pages.js";
 import { writeTypes } from "../steps/write-types.js";
+import { writeUi } from "../steps/write-ui.js";
 
 type EnvCredentials = { url: string; key: string };
 
@@ -104,6 +105,9 @@ export async function init(targetDir = process.cwd()): Promise<void> {
 
   log.step("Writing types");
   writeTypes(targetDir);
+
+  log.step("Writing UI components");
+  writeUi(targetDir);
 
   log.success("Auth scaffolding complete");
   log.message(`Next step: ${devCommand(packageManager)} and visit /signin`);

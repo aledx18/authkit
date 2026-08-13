@@ -1,0 +1,58 @@
+---
+interface Props {
+  size?: "default" | "sm";
+  /** Shortcut that renders the header (title + description) */
+  title?: string;
+  description?: string;
+  /** Extra utility classes appended to the base styles */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { size = "default", title, description, class: className = "", ...rest } = Astro.props;
+
+// Astro slots: named slots must be direct children. `header` overrides the
+// title/description shortcut; `footer` renders the footer wrapper.
+const hasHeader = Astro.slots.has("header");
+const hasFooter = Astro.slots.has("footer");
+
+const base =
+  "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl";
+const headerBase =
+  "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)";
+const titleBase = "text-base leading-snug font-medium group-data-[size=sm]/card:text-sm";
+const descriptionBase = "text-sm text-muted-foreground";
+const contentBase = "px-(--card-spacing)";
+const footerBase = "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)";
+---
+
+<div {...rest} data-slot="card" data-size={size} class={`${base} ${className}`}>
+  {hasHeader ? (
+    <slot name="header" />
+  ) : (
+    (title || description) && (
+      <div data-slot="card-header" class={headerBase}>
+        {title && (
+          <h3 data-slot="card-title" class={titleBase}>
+            {title}
+          </h3>
+        )}
+        {description && (
+          <div data-slot="card-description" class={descriptionBase}>
+            {description}
+          </div>
+        )}
+      </div>
+    )
+  )}
+
+  <div data-slot="card-content" class={contentBase}>
+    <slot />
+  </div>
+
+  {hasFooter && (
+    <div data-slot="card-footer" class={footerBase}>
+      <slot name="footer" />
+    </div>
+  )}
+</div>

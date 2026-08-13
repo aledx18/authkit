@@ -2,6 +2,8 @@
 import "@/styles/global.css";
 import { actions, isInputError } from "astro:actions";
 import { requireGuest } from "@aledx18/astro/protect";
+import Input from "@/components/ui/Input.astro";
+import Button from "@/components/ui/Button.astro";
 
 const redirectResponse = requireGuest(Astro);
 if (redirectResponse) return redirectResponse;
@@ -19,29 +21,91 @@ const authError = result?.data && !result.data.ok ? result.data.error : undefine
 
 <html>
   <head><title>Register</title></head>
-  <body class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-    <main class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-      <h1 class="text-2xl font-bold text-slate-900 mb-6">Register</h1>
-      {authError && <p class="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{authError}</p>}
-      {inputErrors.email && <p class="mb-4 text-sm text-red-700">{inputErrors.email.join(", ")}</p>}
-      {inputErrors.password && <p class="mb-4 text-sm text-red-700">{inputErrors.password.join(", ")}</p>}
-      <form method="POST" action={actions.register} class="space-y-4">
-        <label class="block">
-          <span class="block text-sm font-medium text-slate-700 mb-1">Email</span>
-          <input type="email" name="email" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-        </label>
-        <label class="block">
-          <span class="block text-sm font-medium text-slate-700 mb-1">Password</span>
-          <input type="password" name="password" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-        </label>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition">Create account</button>
-      </form>
-      <p class="mt-4 text-sm text-slate-600 text-center">
-        <a href="/api/auth/oauth/google" class="text-blue-600 hover:underline">Google</a> · <a href="/api/auth/oauth/github" class="text-blue-600 hover:underline">GitHub</a>
-      </p>
-      <p class="mt-2 text-sm text-slate-600 text-center">
-        <a href="/signin" class="text-blue-600 hover:underline">Already have an account? Sign in</a>
-      </p>
-    </main>
+  <body>
+    <div class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <div class="w-full max-w-sm">
+        <div class="flex flex-col gap-6">
+          <form method="POST" action={actions.register}>
+            <div class="group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4">
+              <div class="flex flex-col items-center gap-2 text-center">
+                <h1 class="text-xl font-bold">Create an account</h1>
+                <div class="text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5 last:mt-0 nth-last-2:-mt-1 [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary">
+                  Already have an account? <a href="/signin">Sign in</a>
+                </div>
+              </div>
+              {authError && (
+                <p class="text-sm text-destructive">{authError}</p>
+              )}
+              <div class="group/field flex w-full flex-col gap-2">
+                <label for="email" class="text-sm font-medium leading-none text-foreground">
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  aria-invalid={inputErrors.email ? "true" : undefined}
+                  aria-describedby={inputErrors.email ? "email-error" : undefined}
+                />
+                {inputErrors.email && (
+                  <p id="email-error" class="text-sm text-destructive">
+                    {inputErrors.email.join(", ")}
+                  </p>
+                )}
+              </div>
+              <div class="group/field flex w-full flex-col gap-2">
+                <label for="password" class="text-sm font-medium leading-none text-foreground">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  required
+                  aria-invalid={inputErrors.password ? "true" : undefined}
+                  aria-describedby={inputErrors.password ? "password-error" : undefined}
+                />
+                {inputErrors.password && (
+                  <p id="password-error" class="text-sm text-destructive">
+                    {inputErrors.password.join(", ")}
+                  </p>
+                )}
+              </div>
+              <div class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto">
+                <Button type="submit">Create account</Button>
+              </div>
+              <div class="relative -my-2 h-5 text-sm">
+                <div class="absolute inset-0 top-1/2 h-px w-full bg-border"></div>
+                <span class="relative mx-auto block w-fit bg-background px-2 text-muted-foreground">
+                  Or
+                </span>
+              </div>
+              <div class="grid gap-4 sm:grid-cols-2 group/field w-full flex-col *:w-full [&>.sr-only]:w-auto">
+                <Button variant="outline" href="/api/auth/oauth/github">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    ><path
+                      fill="currentColor"
+                      d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
+                    ></path></svg
+                  >
+                  Continue with GitHub
+                </Button>
+                <Button variant="outline" href="/api/auth/oauth/google">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    ><path
+                      fill="currentColor"
+                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053z"
+                    ></path></svg
+                  >
+                  Continue with Google
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

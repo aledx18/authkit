@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/dist", "!**/build", "!**/node_modules", "!**/.turbo"]
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/build",
+      "!**/node_modules",
+      "!**/.turbo",
+      "!examples/astro-basic/src/styles/global.css"
+    ]
   },
   "formatter": {
     "enabled": true,

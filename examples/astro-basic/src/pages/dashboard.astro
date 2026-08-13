@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import { actions } from "astro:actions";
 import { requireAuth } from "@aledx18/astro/protect";
+import Button from "@/components/ui/Button.astro";
 
 const redirectResponse = requireAuth(Astro);
 if (redirectResponse) return redirectResponse;
@@ -17,18 +18,20 @@ const user = Astro.locals.user;
 
 <html>
   <head><title>Dashboard</title></head>
-  <body class="min-h-screen bg-slate-100">
-    <header class="bg-white shadow-sm">
-      <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 class="text-xl font-bold text-slate-900">Dashboard</h1>
+  <body class="min-h-svh bg-background">
+    <header class="border-b bg-card">
+      <div class="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
+        <h1 class="text-lg font-semibold text-foreground">Dashboard</h1>
         <form method="POST" action={actions.signout}>
-          <button type="submit" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-medium py-2 px-4 rounded-lg transition">Sign out</button>
+          <Button variant="outline" type="submit">Sign out</Button>
         </form>
       </div>
     </header>
-    <main class="max-w-3xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-2xl shadow p-6">
-        <p class="text-slate-700">Welcome, <span class="font-semibold text-slate-900">{user?.email ?? "unknown"}</span></p>
+    <main class="mx-auto max-w-3xl px-4 py-8">
+      <div class="rounded-xl bg-card p-6 ring-1 ring-foreground/10">
+        <p class="text-sm text-muted-foreground">
+          Welcome, <span class="font-medium text-foreground">{user?.email ?? "unknown"}</span>
+        </p>
       </div>
     </main>
   </body>
