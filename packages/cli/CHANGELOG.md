@@ -1,5 +1,19 @@
 # @aledx18/authkit
 
+## 0.9.0
+
+### Minor Changes
+
+- f69fa46: Generate a shadcn-style UI system with the auth scaffold:
+
+  - `src/components/ui/{Button,Input,Card}.astro` (written when missing — user components are never overwritten)
+  - `src/styles/global.css` with design tokens (light/dark palettes, `@theme` mapping) — replaces the bare `@import "tailwindcss"` stub created by `astro add tailwind`, but leaves a user's own stylesheet untouched
+  - Auth pages styled with the design system (Button supports `href` for the OAuth links)
+
+### Patch Changes
+
+- ed978b7: Stop adding `baseUrl` when configuring the `@/*` path alias — `paths` resolve relative to the tsconfig location since TS 4.1, and `baseUrl` is deprecated in TypeScript 7 (it emitted a deprecation error in generated projects). Verified Astro still resolves the alias at runtime.
+
 ## 0.8.0
 
 ### Minor Changes
