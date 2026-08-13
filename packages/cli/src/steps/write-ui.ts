@@ -18,6 +18,15 @@ function writeComponents(targetDir: string): void {
   }
 }
 
+/** Writes the auth form component (composite of the ui primitives). */
+function writeAuthForm(targetDir: string): void {
+  writeFileIfMissing(
+    targetDir,
+    "src/components/AuthForm.astro",
+    readTemplate("components/AuthForm.astro.tmpl"),
+  );
+}
+
 /**
  * Writes the design-system stylesheet (src/styles/global.css).
  *
@@ -41,8 +50,9 @@ function writeStyles(targetDir: string): void {
   console.log("  · src/styles/global.css");
 }
 
-/** Writes the UI components and the design-system stylesheet. */
+/** Writes the UI components, the auth form and the design-system stylesheet. */
 export function writeUi(targetDir: string): void {
   writeComponents(targetDir);
+  writeAuthForm(targetDir);
   writeStyles(targetDir);
 }
