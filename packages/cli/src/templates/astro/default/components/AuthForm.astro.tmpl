@@ -1,12 +1,12 @@
 ---
-import type { ActionClient } from "astro:actions";
 import Button from "./ui/Button.astro";
 import Input from "./ui/Input.astro";
 
 interface Props {
   title: string;
   submitLabel: string;
-  action: ActionClient<any, any, any>;
+  /** The astro:actions action (e.g. actions.signin) — typed as string, matching Astro's form action attribute */
+  action: string;
   /** Banner shown above the form (success states, e.g. "check your email") */
   successMessage?: string;
   /** General error message (auth errors, query params) */
