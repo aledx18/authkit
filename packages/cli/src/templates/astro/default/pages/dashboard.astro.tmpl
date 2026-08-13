@@ -12,7 +12,6 @@ if (signOutResult && !signOutResult.error) {
   return Astro.redirect("/signin");
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template
 const user = Astro.locals.user;
 ---
 
