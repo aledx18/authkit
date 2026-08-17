@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 
-const DEPS = ["@aledx18/astro", "@supabase/supabase-js", "@supabase/ssr"];
+const DEPS = ["astro-auth-integration", "@supabase/supabase-js", "@supabase/ssr"];
 
 const PM_ADD: Record<string, [string, string[]]> = {
   bun: ["bun", ["add"]],

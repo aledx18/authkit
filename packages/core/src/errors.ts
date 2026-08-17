@@ -15,7 +15,7 @@ const MESSAGES: Record<string, string> = {
  * code is unknown, and to a generic message when there is no error.
  *
  * @example
- * import { getAuthErrorMessage } from "@aledx18/supabase-auth-core";
+ * import { getAuthErrorMessage } from "astro-auth-core";
  * const { error } = await supabase.auth.signInWithPassword({ email, password });
  * if (error) {
  *   return { error: getAuthErrorMessage(error) };

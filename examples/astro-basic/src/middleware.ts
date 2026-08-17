@@ -1,1 +1,1 @@
-export { onRequest } from "@aledx18/astro/middleware";
+export { onRequest } from "astro-auth-integration/middleware";

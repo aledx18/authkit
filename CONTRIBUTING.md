@@ -1,6 +1,6 @@
 # Contributing to authkit
 
-## Regla de oro para `@aledx18/supabase-auth-core`
+## Regla de oro para `astro-auth-core`
 
 Antes de agregar cualquier función al core, respondete estas dos preguntas:
 
@@ -34,9 +34,9 @@ El core NO es un wrapper de `supabase-js`. Es una capa fina de tipos y utilidade
 ```
 authkit/
 ├── packages/
-│   ├── cli/          → @aledx18/authkit (CLI, sin lógica de auth)
-│   ├── core/         → @aledx18/supabase-auth-core (tipos + utilidades mínimas)
-│   └── astro/        → @aledx18/astro (integración Astro)
+│   ├── cli/          → astro-auth-kit (CLI, sin lógica de auth)
+│   ├── core/         → astro-auth-core (tipos + utilidades mínimas)
+│   └── astro/        → astro-auth-integration (integración Astro)
 └── examples/
     └── astro-basic/  → Campo de pruebas para patrones Astro
 ```

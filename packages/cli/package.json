@@ -1,10 +1,10 @@
 {
-  "name": "@aledx18/authkit",
+  "name": "astro-auth-kit",
   "version": "0.10.0",
   "description": "CLI for scaffolding auth with Supabase in Astro, Express, Hono, and more",
   "type": "module",
   "bin": {
-    "authkit": "./dist/index.js"
+    "astro-auth-kit": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,7 +17,7 @@
     "directory": "packages/cli"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && rm -rf dist/templates && cp -r src/templates dist/templates",

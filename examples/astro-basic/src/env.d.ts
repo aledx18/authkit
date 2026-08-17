@@ -1,1 +1,1 @@
-/// <reference types="@aledx18/astro/types" />
+/// <reference types="astro-auth-integration/types" />

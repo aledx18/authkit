@@ -30,7 +30,7 @@ export type SupabaseEnv = {
  * Always returns `supabasePublishableKey` regardless of which var was set.
  *
  * @example
- * import { validateSupabaseEnv } from "@aledx18/supabase-auth-core";
+ * import { validateSupabaseEnv } from "astro-auth-core";
  * const env = validateSupabaseEnv(import.meta.env);
  * createClient(env.SUPABASE_URL, env.supabasePublishableKey);
  */

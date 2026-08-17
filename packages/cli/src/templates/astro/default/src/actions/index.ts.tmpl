@@ -1,5 +1,5 @@
 import { defineAction } from "astro:actions";
-import { authActions } from "@aledx18/astro/actions";
+import { authActions } from "astro-auth-integration/actions";
 
 export const server = {
   signin: defineAction(authActions.signin),

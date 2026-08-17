@@ -1,7 +1,7 @@
 ---
 import "@/styles/global.css";
 import { actions, isInputError } from "astro:actions";
-import { requireGuest } from "@aledx18/astro/protect";
+import { requireGuest } from "astro-auth-integration/protect";
 import AuthForm from "@/components/AuthForm.astro";
 
 const redirectResponse = requireGuest(Astro);

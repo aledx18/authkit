@@ -1,1 +1,1 @@
-export { oauthRedirect as GET } from "@aledx18/astro/oauth";
+export { oauthRedirect as GET } from "astro-auth-integration/oauth";

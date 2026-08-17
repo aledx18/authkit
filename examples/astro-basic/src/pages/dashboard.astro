@@ -1,7 +1,7 @@
 ---
 import "@/styles/global.css";
 import { actions } from "astro:actions";
-import { requireAuth } from "@aledx18/astro/protect";
+import { requireAuth } from "astro-auth-integration/protect";
 import Button from "@/components/ui/Button.astro";
 
 const redirectResponse = requireAuth(Astro);

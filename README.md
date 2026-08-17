@@ -1,8 +1,8 @@
-# ⚡ authkit
+# ⚡ astro-auth-kit
 
 Scaffolding de autenticación **Supabase + Astro** en un comando.
 
-`@aledx18/authkit` genera un proyecto Astro con auth lista para usar — sesión SSR, email/password, OAuth (Google/GitHub), reset de contraseña, rutas protegidas, Tailwind y un sistema de componentes reutilizables. Todo estilado y funcionando.
+`astro-auth-kit` genera un proyecto Astro con auth lista para usar — sesión SSR, email/password, OAuth (Google/GitHub), reset de contraseña, rutas protegidas, Tailwind y un sistema de componentes reutilizables. Todo estilado y funcionando.
 
 ## ✨ Qué genera
 
@@ -24,22 +24,14 @@ bun create astro@latest mi-app --template basics
 cd mi-app
 ```
 
-**Configurá el registry** de GitHub Packages (una vez por proyecto):
-
-```ini
-# .npmrc
-@aledx18:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-**Corré el CLI** (con bun, instalalo primero — `bunx` no lee el `.npmrc` del proyecto):
+**Corré el CLI:**
 
 ```bash
-bun add -d @aledx18/authkit
-bunx @aledx18/authkit init
+bun add -d astro-auth-kit
+bunx astro-auth-kit init
 ```
 
-> **npm**: `npx @aledx18/authkit init` funciona directo.
+> **npm**: `npx astro-auth-kit init` funciona directo.
 
 El CLI te va a preguntar si ya tenés un proyecto de Supabase (URL + publishable key). Si no, genera un `.env.example` con placeholders para completar después.
 
@@ -96,7 +88,7 @@ export const server = {
 O escribí tu propia action con el cliente SSR:
 
 ```ts
-import { createSupabaseServerClient } from "@aledx18/astro/server";
+import { createSupabaseServerClient } from "astro-auth-integration/server";
 // control total
 ```
 
@@ -104,9 +96,9 @@ import { createSupabaseServerClient } from "@aledx18/astro/server";
 
 | Paquete | Rol |
 |---|---|
-| `@aledx18/authkit` | CLI de scaffolding |
-| `@aledx18/astro` | Integración Astro (middleware, protect, actions, oauth) |
-| `@aledx18/supabase-auth-core` | Tipos y utilidades compartidas (mensajes de error, env) |
+| `astro-auth-kit` | CLI de scaffolding |
+| `astro-auth-integration` | Integración Astro (middleware, protect, actions, oauth) |
+| `astro-auth-core` | Tipos y utilidades compartidas (mensajes de error, env) |
 
 ## 🧑‍💻 Desarrollo del monorepo
 
@@ -119,4 +111,4 @@ bun run lint           # Biome
 
 ---
 
-**authkit** — auth Supabase para Astro, en un comando.
+**astro-auth-kit** — auth Supabase para Astro, en un comando.

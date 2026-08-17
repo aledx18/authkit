@@ -1,5 +1,5 @@
 {
-  "name": "@aledx18/astro-basic",
+  "name": "astro-auth-basic",
   "private": true,
   "type": "module",
   "version": "0.0.9",
@@ -9,15 +9,15 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@aledx18/astro": "workspace:*",
     "@astrojs/node": "^10.0.0",
     "@supabase/ssr": "^0.6.0",
     "@supabase/supabase-js": "^2.57.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "astro-auth-integration": "workspace:*"
   },
   "devDependencies": {
-    "@aledx18/supabase-auth-core": "workspace:*"
+    "astro-auth-core": "workspace:*"
   }
 }
