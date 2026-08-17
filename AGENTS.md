@@ -7,7 +7,6 @@
   - `packages/core` → `@aledx18/supabase-auth-core` (tipos + utilidades mínimas NO cubiertas por supabase-js)
   - `packages/cli` → `@aledx18/authkit` (CLI de scaffolding, sin lógica de auth)
   - `packages/astro` → `@aledx18/astro` (integración Astro: middleware, locals, cookies, protected routes)
-  - `packages/react` → `@aledx18/supabase-auth-react` (PAUSADO, no tocar)
 - `examples/astro-basic` is a real Astro project with `output: 'server'` and adapter-node — this is the test field for discovering patterns that deserve to move up to core or astro.
 - Public package APIs are exported from each package's `src/index.ts`.
 - Internal dependencies use `"workspace:*"`.

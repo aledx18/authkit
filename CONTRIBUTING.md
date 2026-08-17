@@ -26,12 +26,8 @@ El core NO es un wrapper de `supabase-js`. Es una capa fina de tipos y utilidade
 ### Cuándo sí agregar algo al core
 
 - Cuando un patrón se repite en 2+ proyectos y NO es cubierto por supabase-js
-- Cuando es el contrato estable que consumen otros paquetes del monorepo (astro, react)
+- Cuando es el contrato estable que consumen otros paquetes del monorepo (astro, cli)
 - Cuando agrega composición o defaults que supabase-js no ofrece
-
-## Regla para `@aledx18/supabase-auth-react`
-
-**PAUSADO.** No se toca hasta que el core tenga una superficie estable y el paquete astro esté maduro.
 
 ## Estructura del monorepo
 
@@ -40,8 +36,7 @@ authkit/
 ├── packages/
 │   ├── cli/          → @aledx18/authkit (CLI, sin lógica de auth)
 │   ├── core/         → @aledx18/supabase-auth-core (tipos + utilidades mínimas)
-│   ├── astro/        → @aledx18/astro (integración Astro)
-│   └── react/        → @aledx18/supabase-auth-react (PAUSADO)
+│   └── astro/        → @aledx18/astro (integración Astro)
 └── examples/
     └── astro-basic/  → Campo de pruebas para patrones Astro
 ```

@@ -5,7 +5,6 @@ Kit de autenticación para Supabase con múltiples integraciones:
 - **`@aledx18/supabase-auth-core`**: tipos y utilidades mínimas NO cubiertas por `@supabase/supabase-js`.
 - **`@aledx18/authkit`**: CLI para scaffolding de auth en Astro, Express, Hono, y más.
 - **`@aledx18/astro`**: integración Astro con middleware, locals, cookies y rutas protegidas.
-- **`@aledx18/supabase-auth-react`**: (PAUSADO) provider, hooks y componentes UI para React.
 
 El consumidor trae su propio cliente `@supabase/supabase-js` (peer dependency de todos los paquetes).
 
@@ -32,7 +31,6 @@ packages/
   core/         # @aledx18/supabase-auth-core (tipos + utilidades mínimas)
   cli/          # @aledx18/authkit (CLI de scaffolding)
   astro/        # @aledx18/astro (integración Astro)
-  react/        # @aledx18/supabase-auth-react (PAUSADO)
 examples/
   astro-basic/  # Campo de pruebas Astro con output: 'server'
 ```
