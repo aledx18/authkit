@@ -1,5 +1,11 @@
 # @aledx18/supabase-auth-core
 
+## 0.5.0
+
+### Minor Changes
+
+- 10225a9: Initial release on npm: the packages were renamed off the GitHub Packages scope to unscoped npm names (`astro-auth-kit`, `astro-auth-integration`, `astro-auth-core`) and are now published to the public npm registry.
+
 ## 0.4.0
 
 ### Minor Changes

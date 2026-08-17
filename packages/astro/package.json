@@ -1,7 +1,7 @@
 {
   "name": "astro-auth-integration",
-  "version": "0.5.0",
-  "description": "Astro integration for Supabase auth \u2014 middleware, locals, cookies, protected routes",
+  "version": "0.6.0",
+  "description": "Astro integration for Supabase auth — middleware, locals, cookies, protected routes",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -58,7 +58,7 @@
     "@supabase/ssr": "^0.6.0",
     "@supabase/supabase-js": "^2.57.4",
     "zod": "^3.24.0",
-    "astro-auth-core": "^0.4.0"
+    "astro-auth-core": "^0.5.0"
   },
   "peerDependencies": {
     "astro": ">=5.0.0"
