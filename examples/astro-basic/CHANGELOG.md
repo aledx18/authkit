@@ -1,5 +1,12 @@
 # @aledx18/astro-basic
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies [10225a9]
+  - astro-auth-integration@0.6.0
+
 ## 0.0.9
 
 ### Patch Changes
