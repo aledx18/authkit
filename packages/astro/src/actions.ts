@@ -1,6 +1,6 @@
-import { getAuthErrorMessage } from "@aledx18/supabase-auth-core";
 import type { AstroCookies } from "astro";
 import { z } from "astro/zod";
+import { getAuthErrorMessage } from "astro-auth-core";
 import { createSupabaseServerClient } from "./server.js";
 
 /**
