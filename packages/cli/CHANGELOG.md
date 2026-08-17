@@ -1,5 +1,15 @@
 # @aledx18/authkit
 
+## 0.10.0
+
+### Minor Changes
+
+- 364b991: Extract the shared auth form markup into a reusable `AuthForm` component (`src/components/AuthForm.astro`): card layout, header with subtitle link, email/password fields with errors, success/auth banners, submit button and the OAuth provider buttons (with their icons — previously duplicated in both templates). signin/register pages are now thin wrappers passing props.
+
+### Patch Changes
+
+- 86b54de: `reset-password` now requires a valid recovery session to show the form: a direct visit without a code and without a session renders the "invalid or expired link" message (with a link to request a new one) instead of a form that would fail on submit.
+
 ## 0.9.0
 
 ### Minor Changes
