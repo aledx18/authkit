@@ -1,82 +1,122 @@
-# authkit
+# ⚡ authkit
 
-Kit de autenticación para Supabase con múltiples integraciones:
+Scaffolding de autenticación **Supabase + Astro** en un comando.
 
-- **`@aledx18/supabase-auth-core`**: tipos y utilidades mínimas NO cubiertas por `@supabase/supabase-js`.
-- **`@aledx18/authkit`**: CLI para scaffolding de auth en Astro, Express, Hono, y más.
-- **`@aledx18/astro`**: integración Astro con middleware, locals, cookies y rutas protegidas.
+`@aledx18/authkit` genera un proyecto Astro con auth lista para usar — sesión SSR, email/password, OAuth (Google/GitHub), reset de contraseña, rutas protegidas, Tailwind y un sistema de componentes reutilizables. Todo estilado y funcionando.
 
-El consumidor trae su propio cliente `@supabase/supabase-js` (peer dependency de todos los paquetes).
+## ✨ Qué genera
 
-## Setup local
+| | |
+|---|---|
+| **Sesión SSR** | Middleware + cookies con `@supabase/ssr`, refresh automático |
+| **Auth completo** | Sign in, register, confirmación de email, OAuth, reset de contraseña |
+| **Rutas protegidas** | `requireAuth` / `requireGuest` explícitos por página |
+| **UI** | Tailwind + componentes `Button`, `Input`, `Card`, `AuthForm` (estilo shadcn) |
+| **Mensajes amigables** | Errores de Supabase traducidos a texto claro |
+| **Alias `@/*`** | Imports limpios configurados en `tsconfig.json` |
+
+## 🚀 Empezar
+
+**Requisito:** un proyecto Astro existente (o crealo):
 
 ```bash
-bun install
+bun create astro@latest mi-app --template basics
+cd mi-app
 ```
 
-## Comandos
+**Configurá el registry** de GitHub Packages (una vez por proyecto):
 
-```bash
-bun run build          # buildea packages/*
-bun run typecheck      # verifica tipos con tsc --build
-bun run lint           # revisa el código con Biome
-bun run lint:fix       # corrige lo que se pueda automáticamente
-bun run format         # formatea todo el repo
-```
-
-## Estructura
-
-```
-packages/
-  core/         # @aledx18/supabase-auth-core (tipos + utilidades mínimas)
-  cli/          # @aledx18/authkit (CLI de scaffolding)
-  astro/        # @aledx18/astro (integración Astro)
-examples/
-  astro-basic/  # Campo de pruebas Astro con output: 'server'
-```
-
-Cada paquete nuevo dentro de `packages/` debe:
-1. Tener su propio `package.json` con nombre `@aledx18/<nombre>`.
-2. Tener un `tsconfig.json` que haga `"extends": "../../tsconfig.base.json"`.
-3. Agregar `"references"` en su `tsconfig.json` si depende de otros paquetes.
-4. Agregarlo al root `tsconfig.json` en `"references"`.
-5. Exportar todo lo público desde `src/index.ts`.
-
-## Usar un paquete dentro de este mismo repo
-
-```json
-{
-  "dependencies": {
-    "@aledx18/supabase-auth-core": "workspace:*"
-  }
-}
-```
-
-## Publicar a GitHub Packages
-
-El workflow `.github/workflows/publish.yml` corre en pushes a `main`: buildea `packages/*` y usa Changesets para abrir una release PR o publicar.
-
-## Consumir desde otro repositorio
-
-En el repo externo, agregá un `.npmrc`:
-
-```
+```ini
+# .npmrc
 @aledx18:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-Y luego:
+**Corré el CLI** (con bun, instalalo primero — `bunx` no lee el `.npmrc` del proyecto):
 
 ```bash
-bun add @supabase/supabase-js @aledx18/supabase-auth-core
+bun add -d @aledx18/authkit
+bunx @aledx18/authkit init
 ```
 
-## Regla de oro para el core
+> **npm**: `npx @aledx18/authkit init` funciona directo.
 
-Antes de agregar cualquier función a `@aledx18/supabase-auth-core`:
+El CLI te va a preguntar si ya tenés un proyecto de Supabase (URL + publishable key). Si no, genera un `.env.example` con placeholders para completar después.
 
-1. **¿`@supabase/supabase-js` ya resuelve esto?** → si sí, no lo metas.
-2. **¿Lo necesito idéntico en 2+ aplicaciones?** → si no, no lo metas todavía.
+## ⚙️ Configuración automática
 
-Ver [CONTRIBUTING.md](./CONTRIBUTING.md) para más detalles.
+`init` detecta y configura por vos:
 
+- **SSR** — si falta `output: "server"`, te pregunta por un adapter (node/vercel/cloudflare/netlify), lo instala y patchea `astro.config.*` (con backup `.bak`)
+- **Tailwind** — si no está, corre `astro add tailwind --yes` (v4 + plugin vite)
+- **Alias `@/*`** — agrega `paths` al `tsconfig.json`
+- **`.env`** — con tus credenciales, o `.env.example` con placeholders
+
+Nada se pisa: archivos que ya existen se saltan, y los configs que toca dejan `.bak`.
+
+## 🔐 Lo que queda en tu proyecto
+
+```
+src/
+├── actions/index.ts          # signin, signout, register, forgotPassword, updatePassword
+├── components/
+│   ├── AuthForm.astro        # form de auth reutilizable
+│   └── ui/{Button,Input,Card}.astro
+├── lib/supabase/{client,server}.ts
+├── middleware.ts
+├── pages/
+│   ├── signin.astro / register.astro / forgot-password.astro / reset-password.astro
+│   ├── dashboard.astro       # ejemplo de ruta protegida
+│   └── api/auth/callback.ts  # + oauth/[provider].ts
+└── styles/global.css         # tokens de diseño (light/dark)
+```
+
+## 🔧 Configuración en Supabase
+
+1. **Providers** → activá Email y los que quieras (Google/GitHub)
+2. Para OAuth, creá una **OAuth App** en el provider y pegá client ID/secret
+3. Configurá la redirect URL: `https://<ref>.supabase.co/auth/v1/callback`
+4. Activá "Allow email" / "allow no email" según tu caso
+
+## 🛠️ Personalizar
+
+Los componentes y páginas son **tuyos** — editálos libremente:
+
+```ts
+// src/actions/index.ts — validación custom
+import { z } from "astro/zod";
+export const server = {
+  register: defineAction({
+    ...authActions.register,
+    input: z.object({ email: z.email(), password: z.string().min(8) }),
+  }),
+};
+```
+
+O escribí tu propia action con el cliente SSR:
+
+```ts
+import { createSupabaseServerClient } from "@aledx18/astro/server";
+// control total
+```
+
+## 📦 Paquetes
+
+| Paquete | Rol |
+|---|---|
+| `@aledx18/authkit` | CLI de scaffolding |
+| `@aledx18/astro` | Integración Astro (middleware, protect, actions, oauth) |
+| `@aledx18/supabase-auth-core` | Tipos y utilidades compartidas (mensajes de error, env) |
+
+## 🧑‍💻 Desarrollo del monorepo
+
+```bash
+bun install
+bun run build          # buildea packages/*
+bun run typecheck      # verifica tipos
+bun run lint           # Biome
+```
+
+---
+
+**authkit** — auth Supabase para Astro, en un comando.
