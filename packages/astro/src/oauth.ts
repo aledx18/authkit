@@ -10,7 +10,7 @@ import { createSupabaseServerClient } from "./server.js";
  *
  * @example
  * // src/pages/api/auth/oauth/[provider].ts
- * export { oauthRedirect as GET } from "@aledx18/astro/oauth";
+ * export { oauthRedirect as GET } from "astro-auth-integration/oauth";
  */
 export const oauthRedirect: APIRoute = async ({ request, cookies, params, url, redirect }) => {
   const provider = params.provider;

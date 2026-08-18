@@ -9,7 +9,7 @@ import { getSupabaseEnv } from "./env.js";
  *
  * @example
  * // In a client script or component
- * import { createSupabaseBrowserClient } from "@aledx18/astro/client";
+ * import { createSupabaseBrowserClient } from "astro-auth-integration/client";
  * const supabase = createSupabaseBrowserClient();
  * const { data } = await supabase.auth.getSession();
  */

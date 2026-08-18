@@ -31,7 +31,7 @@ type AuthResult = { ok: true } | { ok: false; code: string; error: string };
  * @example
  * // Custom input validation while keeping the default handler
  * import { z } from "astro/zod";
- * import { authActions } from "@aledx18/astro/actions";
+ * import { authActions } from "astro-auth-integration/actions";
  * defineAction({
  *   ...authActions.register,
  *   input: z.object({ email: z.email(), password: z.string().min(8) }),
@@ -40,7 +40,7 @@ type AuthResult = { ok: true } | { ok: false; code: string; error: string };
  * @example
  * // src/actions/index.ts
  * import { defineAction } from "astro:actions";
- * import { authActions } from "@aledx18/astro/actions";
+ * import { authActions } from "astro-auth-integration/actions";
  * export const server = {
  *   signin: defineAction(authActions.signin),
  *   signout: defineAction(authActions.signout),

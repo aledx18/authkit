@@ -26,7 +26,7 @@ interface ServerClientContext {
  *
  * @example
  * // In middleware, endpoint, or .astro page
- * import { createSupabaseServerClient } from "@aledx18/astro/server";
+ * import { createSupabaseServerClient } from "astro-auth-integration/server";
  * const supabase = createSupabaseServerClient({ request: Astro.request, cookies: Astro.cookies });
  */
 export function createSupabaseServerClient(context: ServerClientContext) {

@@ -1,81 +1,81 @@
 # ⚡ astro-auth-kit
 
-Scaffolding de autenticación **Supabase + Astro** en un comando.
+Supabase + Astro authentication scaffolding in one command.
 
-`astro-auth-kit` genera un proyecto Astro con auth lista para usar — sesión SSR, email/password, OAuth (Google/GitHub), reset de contraseña, rutas protegidas, Tailwind y un sistema de componentes reutilizables. Todo estilado y funcionando.
+`astro-auth-kit` generates an Astro project with production-ready auth — SSR sessions, email/password, OAuth (Google/GitHub), password reset, protected routes, Tailwind, and a set of reusable components. Styled and working out of the box.
 
-## ✨ Qué genera
+## ✨ What it generates
 
 | | |
 |---|---|
-| **Sesión SSR** | Middleware + cookies con `@supabase/ssr`, refresh automático |
-| **Auth completo** | Sign in, register, confirmación de email, OAuth, reset de contraseña |
-| **Rutas protegidas** | `requireAuth` / `requireGuest` explícitos por página |
-| **UI** | Tailwind + componentes `Button`, `Input`, `Card`, `AuthForm` (estilo shadcn) |
-| **Mensajes amigables** | Errores de Supabase traducidos a texto claro |
-| **Alias `@/*`** | Imports limpios configurados en `tsconfig.json` |
+| **SSR sessions** | Middleware + cookies with `@supabase/ssr`, automatic refresh |
+| **Full auth** | Sign in, register, email confirmation, OAuth, password reset |
+| **Protected routes** | Explicit `requireAuth` / `requireGuest` per page |
+| **UI** | Tailwind + `Button`, `Input`, `Card`, `AuthForm` components (shadcn-style) |
+| **Friendly messages** | Supabase errors translated to clear text |
+| **`@/*` alias** | Clean imports configured in `tsconfig.json` |
 
-## 🚀 Empezar
+## 🚀 Getting started
 
-**Requisito:** un proyecto Astro existente (o crealo):
+**Prerequisite:** an existing Astro project (or create one):
 
 ```bash
-bun create astro@latest mi-app --template basics
-cd mi-app
+bun create astro@latest my-app --template basics
+cd my-app
 ```
 
-**Corré el CLI:**
+**Run the CLI:**
 
 ```bash
 bun add -d astro-auth-kit
 bunx astro-auth-kit init
 ```
 
-> **npm**: `npx astro-auth-kit init` funciona directo.
+> **npm**: `npx astro-auth-kit init` works directly.
 
-El CLI te va a preguntar si ya tenés un proyecto de Supabase (URL + publishable key). Si no, genera un `.env.example` con placeholders para completar después.
+The CLI will ask whether you already have a Supabase project (URL + publishable key). If not, it generates a `.env.example` with placeholders to fill in later.
 
-## ⚙️ Configuración automática
+## ⚙️ Automatic setup
 
-`init` detecta y configura por vos:
+`init` detects and configures for you:
 
-- **SSR** — si falta `output: "server"`, te pregunta por un adapter (node/vercel/cloudflare/netlify), lo instala y patchea `astro.config.*` (con backup `.bak`)
-- **Tailwind** — si no está, corre `astro add tailwind --yes` (v4 + plugin vite)
-- **Alias `@/*`** — agrega `paths` al `tsconfig.json`
-- **`.env`** — con tus credenciales, o `.env.example` con placeholders
+- **SSR** — if `output: "server"` is missing, it asks for an adapter (node/vercel/cloudflare/netlify), installs it and patches `astro.config.*` (with a `.bak` backup)
+- **Tailwind** — if absent, runs `astro add tailwind --yes` (v4 + vite plugin)
+- **`@/*` alias** — adds `paths` to `tsconfig.json`
+- **`.env`** — with your credentials, or `.env.example` with placeholders
 
-Nada se pisa: archivos que ya existen se saltan, y los configs que toca dejan `.bak`.
+Nothing is overwritten: existing files are skipped, and any config it touches keeps a `.bak`.
 
-## 🔐 Lo que queda en tu proyecto
+## 🔐 What stays in your project
 
 ```
 src/
 ├── actions/index.ts          # signin, signout, register, forgotPassword, updatePassword
 ├── components/
-│   ├── AuthForm.astro        # form de auth reutilizable
+│   ├── AuthForm.astro        # reusable auth form
 │   └── ui/{Button,Input,Card}.astro
 ├── lib/supabase/{client,server}.ts
 ├── middleware.ts
 ├── pages/
 │   ├── signin.astro / register.astro / forgot-password.astro / reset-password.astro
-│   ├── dashboard.astro       # ejemplo de ruta protegida
+│   ├── dashboard.astro       # example protected route
 │   └── api/auth/callback.ts  # + oauth/[provider].ts
-└── styles/global.css         # tokens de diseño (light/dark)
+└── styles/global.css         # design tokens (light/dark)
 ```
 
-## 🔧 Configuración en Supabase
+## 🔧 Supabase configuration
 
-1. **Providers** → activá Email y los que quieras (Google/GitHub)
-2. Para OAuth, creá una **OAuth App** en el provider y pegá client ID/secret
-3. Configurá la redirect URL: `https://<ref>.supabase.co/auth/v1/callback`
-4. Activá "Allow email" / "allow no email" según tu caso
+1. **Providers** → enable Email and any others you want (Google/GitHub)
+2. For OAuth, create an **OAuth App** in the provider and paste the client ID/secret
+3. Set the redirect URL: `https://<ref>.supabase.co/auth/v1/callback`
+4. Toggle "Allow email" / "allow no email" as needed
 
-## 🛠️ Personalizar
+## 🛠️ Customize
 
-Los componentes y páginas son **tuyos** — editálos libremente:
+The components and pages are **yours** — edit them freely:
 
 ```ts
-// src/actions/index.ts — validación custom
+// src/actions/index.ts — custom validation
 import { z } from "astro/zod";
 export const server = {
   register: defineAction({
@@ -85,30 +85,30 @@ export const server = {
 };
 ```
 
-O escribí tu propia action con el cliente SSR:
+Or write your own action with the server client:
 
 ```ts
 import { createSupabaseServerClient } from "astro-auth-integration/server";
-// control total
+// full control
 ```
 
-## 📦 Paquetes
+## 📦 Packages
 
-| Paquete | Rol |
+| Package | Role |
 |---|---|
-| `astro-auth-kit` | CLI de scaffolding |
-| `astro-auth-integration` | Integración Astro (middleware, protect, actions, oauth) |
-| `astro-auth-core` | Tipos y utilidades compartidas (mensajes de error, env) |
+| `astro-auth-kit` | Scaffolding CLI |
+| `astro-auth-integration` | Astro integration (middleware, protect, actions, oauth) |
+| `astro-auth-core` | Shared types and utilities (error messages, env) |
 
-## 🧑‍💻 Desarrollo del monorepo
+## 🧑‍💻 Monorepo development
 
 ```bash
 bun install
-bun run build          # buildea packages/*
-bun run typecheck      # verifica tipos
+bun run build          # builds packages/*
+bun run typecheck      # type checks
 bun run lint           # Biome
 ```
 
 ---
 
-**astro-auth-kit** — auth Supabase para Astro, en un comando.
+**astro-auth-kit** — Supabase auth for Astro, in one command.

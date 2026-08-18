@@ -32,7 +32,7 @@ export type AstroSupabaseEnv = {
  * Throws if env vars are missing or malformed.
  *
  * @example
- * import { getSupabaseEnv } from "@aledx18/astro/env";
+ * import { getSupabaseEnv } from "astro-auth-integration/env";
  * const { url, key } = getSupabaseEnv();
  */
 export function getSupabaseEnv(): AstroSupabaseEnv {

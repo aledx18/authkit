@@ -9,7 +9,7 @@ type ProtectableContext = Pick<AstroGlobal | APIContext, "locals" | "redirect">;
  *
  * @example
  * ---
- * import { requireAuth } from "@aledx18/astro/protect";
+ * import { requireAuth } from "astro-auth-integration/protect";
  * const redirectResponse = requireAuth(Astro);
  * if (redirectResponse) return redirectResponse;
  * const { user } = Astro.locals;
@@ -32,7 +32,7 @@ export function requireAuth(context: ProtectableContext, redirectTo = "/signin")
  *
  * @example
  * ---
- * import { requireGuest } from "@aledx18/astro/protect";
+ * import { requireGuest } from "astro-auth-integration/protect";
  * const redirectResponse = requireGuest(Astro);
  * if (redirectResponse) return redirectResponse;
  * ---
